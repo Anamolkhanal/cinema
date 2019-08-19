@@ -8,7 +8,7 @@ public class main {
 		int ch;
 	
 		Scanner sc=new Scanner(System.in);
-		Movies a=new Movies("Spider man");
+		//Movies a=new Movies("Spider man");
 		
 	do {
 			System.out.println("Cinema ticketing System");
@@ -21,7 +21,7 @@ public class main {
 		    switch(ch)
 		    {
 		    case 1:
-		    	System.out.println(a);
+	//	    	System.out.println(a);
 		    	break;
 		    case 2:
 		    	System.out.println("add the movies name :");

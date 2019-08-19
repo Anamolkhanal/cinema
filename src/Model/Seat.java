@@ -2,24 +2,28 @@ package Model;
 
 import java.awt.Graphics;
 import java.util.*;
-import java.util.Scanner;
 
 public class Seat{
-	//private int seatcount;
 	private double price=300;
 	private int [][] seatarr;
 	private ArrayList seatNo;
-	private Audience obj;
+	private int hallno;
+	
 	Scanner sc=new Scanner(System.in);
 	
 	public Seat() {
+		price=0.0;
 		seatarr=new int[5][5];
-		seatlayout();
-		seatNo=new ArrayList <String>();
-		inputSeat();
-		new Audience();
+		seatNo=null;
 		
 		}
+	public ArrayList seatmain(int n) {
+	      this.hallno=n;
+		seatlayout();
+		seatNo=new ArrayList <String>();
+		inputSeat(); 
+		return seatNo;
+	}
 		public void inputSeat() {
 		//ArrayList <String> seatNo=new ArrayList <String>(); 
 		System.out.println("number of seat you want:");
@@ -107,4 +111,9 @@ public class Seat{
 		
 		
 	}
+	@Override
+	public String toString() {
+		return "Seat [price=" + price + ", seatNo=" + seatNo +"hallno="+hallno+ "]";
+	}
+		
 }
