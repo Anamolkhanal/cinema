@@ -1,31 +1,36 @@
 package Model;
-
 import java.awt.Graphics;
+import java.sql.SQLException;
 import java.util.*;
-
+import Database.Database;
+import java.util.Scanner;
 public class Seat{
 	private double price=300;
-	private int [][] seatarr;
+	private int [][] seatarr=new int [5][5];
 	private ArrayList seatNo;
-	private int hallno;
-	
-	Scanner sc=new Scanner(System.in);
-	
+	private String Showtime;
+	Scanner sc=new Scanner (System.in);
 	public Seat() {
 		price=0.0;
 		seatarr=new int[5][5];
 		seatNo=null;
-		
-		}
-	public ArrayList seatmain(int n) {
-	      this.hallno=n;
+		Showtime="";
+	}
+	public Seat(int[][] seatarr,String Showtime) {
+		price=0.0;
+		this.seatarr=seatarr;
+		seatNo=null;
+		this.Showtime=Showtime;
+	}
+	public ArrayList seatmain() {
 		seatlayout();
 		seatNo=new ArrayList <String>();
 		inputSeat(); 
 		return seatNo;
 	}
 		public void inputSeat() {
-		//ArrayList <String> seatNo=new ArrayList <String>(); 
+		//ArrayList <String> seatNo=new ArrayList <String>();
+			Database db=null;
 		System.out.println("number of seat you want:");
 		int number=sc.nextInt();
 		sc.nextLine();
@@ -37,12 +42,20 @@ public class Seat{
 				int seatn=sc.nextInt();
 				sc.nextLine();
 				int check=Isbooked(block,seatn-1);
-				//System.out.println(check);
 				if(check==0) 
 				{
-					seatNo.add(block+""+seatn);
-					//System.out.println("you seat "+block+seatn+" is booked");
-					//seatlayout();
+					String x=block+""+seatn;
+					seatNo.add(x);
+					
+					try {
+						db = new Database();
+						db.addseatinfo(x,Showtime);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
 				}	
 				else
 				{
@@ -57,12 +70,12 @@ public class Seat{
 		{
 			for(int j=0;j<5;j++)
 			{
-				if(this.seatarr[i][j]==1)
+				if(seatarr[i][j]==1)
 					System.out.print("no ");
 				else if(i==0)
 					System.out.print("A"+(j+1)+" ");
 				else if(i==1)
-				System.out.print("B"+(j+1)+" ");
+				System.out.print("B"+(j+1)+" "); 
 				else if(i==2)
 					System.out.print("C"+(j+1)+" ");
 				else if(i==3)
@@ -91,7 +104,7 @@ public class Seat{
 		else
 		{
 			i=6;
-			System.out.println("Invalid block!! try again with BLock [A-B]");
+			System.out.println("Invalid block!! try again with BLock [A-E]");
 			
 		}
 		if(i>=0&&i<=4) 
@@ -99,6 +112,7 @@ public class Seat{
 			if(seatarr[i][seatn]==0)
 			{
 				seatarr[i][seatn]=1;
+				
 				return 0;
 			}
 			return 1;
@@ -113,7 +127,7 @@ public class Seat{
 	}
 	@Override
 	public String toString() {
-		return "Seat [price=" + price + ", seatNo=" + seatNo +"hallno="+hallno+ "]";
+		return "Seat [price=" + price + ", seatNo=" + seatNo +"Showtime="+Showtime+ "]";
 	}
 		
 }
